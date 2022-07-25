@@ -1,6 +1,7 @@
 <h1><%= @employee.name %>'s Show Page</h1>
 
 <p>Which department they are in: <%= @employee.department.name %></p>
+<p>What level this employee is: <%= @employee.level %></p>
 
 <div id="employee-tickets">
     <p>The following are <%= @employee.name %>'s tickets:</p>
@@ -16,6 +17,14 @@
 <div id='oldest-ticket'>
     <p>This employee's oldest ticket is: <b><%= @employee.tickets.order(age: :desc).first.subject %></b> with an age of: <b><%= @employee.tickets.order(age: :desc).first.age %></b> </p>
 </div>
+
+<%# <div id='employees-shared-tickets'> %>
+    <%# <p>List of all the other employees that this employee shares tickets with:</p> %>
+    <%# <ul> %>
+        <%# <% binding.pry %> %>
+        <%# Employee.joins(:employee_tickets).order(:ticket_id).pluck(:name, :ticket_id)where(....something that says ticket_id's match other ticket_id's) %>
+    <%# </ul> %>
+<%# </div> %>
 
 <div id='add-ticket'>
     <p>Add a ticket to this employee by submitting below the id of an already existing ticket</p>

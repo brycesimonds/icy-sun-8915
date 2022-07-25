@@ -123,4 +123,55 @@ RSpec.describe 'Employee Show Page' do
         expect(current_path).to eq("/employees/#{chris.id}")
         expect(page).to have_content('Bored so I made a ticket')
     end
+    
+    ##Below tests are for the Extension
+    it 'shows the employees level' do 
+        it_dept = Department.create!(name: 'IT Department', floor: 'Basement')
+        hr_dept = Department.create!(name: 'HR Department', floor: 'First Floor')
+
+
+        mike = Employee.create!(name: 'Mike Dao', level: 4, department_id: it_dept.id)
+        chris = Employee.create!(name: 'Christina Aguilera', level: 2, department_id: hr_dept.id)
+
+        printer_ticket = Ticket.create!(subject: 'Printer is broken', age: 5)
+        bathroom_ticket = Ticket.create!(subject: 'Bathroom is clogged', age: 1)
+        lights_ticket = Ticket.create!(subject: 'Lights are out', age: 6)
+        bored_ticket = Ticket.create!(subject: 'Bored so I made a ticket', age: 9)
+
+        EmployeeTicket.create!(employee:chris, ticket:bathroom_ticket)
+        EmployeeTicket.create!(employee:chris, ticket:printer_ticket)
+        EmployeeTicket.create!(employee:chris, ticket:lights_ticket)
+
+        visit "/employees/#{chris.id}"
+        
+        expect(page).to have_content('What level this employee is: 2')
+    end
+
+    # it 'shows the employees level' do 
+    #     it_dept = Department.create!(name: 'IT Department', floor: 'Basement')
+    #     hr_dept = Department.create!(name: 'HR Department', floor: 'First Floor')
+
+    #     chris = Employee.create!(name: 'Christina Aguilera', level: 2, department_id: hr_dept.id)
+    #     ariana = Employee.create!(name: 'Ariana Grande', level: 3, department_id: hr_dept.id)
+    #     mike = Employee.create!(name: 'Mike Dao', level: 4, department_id: it_dept.id)
+
+    #     printer_ticket = Ticket.create!(subject: 'Printer is broken', age: 5)
+    #     bathroom_ticket = Ticket.create!(subject: 'Bathroom is clogged', age: 1)
+    #     lights_ticket = Ticket.create!(subject: 'Lights are out', age: 6)
+    #     bored_ticket = Ticket.create!(subject: 'Bored so I made a ticket', age: 9)
+
+    #     EmployeeTicket.create!(employee:chris, ticket:printer_ticket)
+    #     EmployeeTicket.create!(employee:chris, ticket:bathroom_ticket)
+
+    #     EmployeeTicket.create!(employee:ariana, ticket:printer_ticket)
+
+    #     EmployeeTicket.create!(employee:mike, ticket:lights_ticket)
+
+    #     visit "/employees/#{chris.id}"
+        
+    #     within "#employees-shared-tickets" do 
+    #         expect(page).to have_content('Ariana Grande')
+    #         expect(page).to_not have_content('Mike Dao')
+    #     end
+    # end
 end 
