@@ -1,0 +1,27 @@
+<h1><%= @employee.name %>'s Show Page</h1>
+
+<p>Which department they are in: <%= @employee.department.name %></p>
+
+<div id="employee-tickets">
+    <p>The following are <%= @employee.name %>'s tickets:</p>
+    <ul>
+        <% @employee.tickets.order(age: :desc).drop(1).each do |ticket| %>
+            <li>Subject: <%= ticket.subject %></li>
+            <li>Age: <%= ticket.age %></li>
+            <br>
+        <% end  %>
+    </ul>
+</div>
+
+<div id='oldest-ticket'>
+    <p>This employee's oldest ticket is: <b><%= @employee.tickets.order(age: :desc).first.subject %></b> with an age of: <b><%= @employee.tickets.order(age: :desc).first.age %></b> </p>
+</div>
+
+<div id='add-ticket'>
+    <p>Add a ticket to this employee by submitting below the id of an already existing ticket</p>
+    <%= form_with url: "/employee_tickets/#{@employee.id}", method: :post, local:true do |f| %>
+        <%= f.label "ID of already existing ticket:" %>
+        <%= f.text_area :id %>
+        <%= f.submit 'Add Ticket' %>
+    <% end %>
+</div>
